@@ -1,0 +1,53 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TodoList" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_color</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- ActionBar specific styling -->
+        <item name="actionBarStyle">@style/Widget.App.ActionBar</item>
+        <item name="actionBarTheme">@style/ThemeOverlay.App.ActionBar</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/background_color</item>
+
+        <!-- Customize the color of the status bar icons and text for light status bar -->
+        <item name="android:windowLightStatusBar">false</item>
+
+
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+
+    <style name="Theme.TodoList" parent="Base.Theme.TodoList">
+        <item name="titleTextColor">@color/white</item>
+        <item name="android:titleTextColor">@color/white</item>
+        <item name="titleTextStyle">@style/TextAppearance.App.ActionBar.Title</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="Widget.App.ActionBar" parent="Widget.MaterialComponents.ActionBar.Solid">
+        <item name="background">?attr/colorPrimary</item>
+        <item name="titleTextStyle">@style/TextAppearance.App.ActionBar.Title</item>
+    </style>
+
+    <style name="ThemeOverlay.App.ActionBar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.App.ActionBar.Title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/primary_color</item>
+    </style>
+
+    <style name="CustomHeaderToggleButton">
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TodoList</string>
+    <string name="add_new_task_desc">Add new task</string>
+    <string name="delete_task_desc">Delete Task</string>
+    <string name="task_details_task_title">Task</string>
+    <string name="task_details_description_header">Description</string>
+    <string name="task_details_completed_button">Completed</string>
+    <string name="title_hint_e_g_buy_groceries_today">Title (E.g. Buy groceries today)</string>
+    <string name="note_hint_enter_task_note">Enter Task Note</string>
+    <string name="add_task_btn_text">SAVE</string>
+    <string name="select_deadline">Select Deadline</string>
+    <string name="select_task_deadline">Select Task Deadline</string>
+    <string name="update">UPDATE</string>
+    <string name="deadline">Deadline</string>
+</resources>
