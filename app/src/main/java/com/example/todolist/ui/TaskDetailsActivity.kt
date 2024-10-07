@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.todolist.R
+import com.example.todolist.TaskCompletionReceiver
 import com.example.todolist.TodoListApplication
 import com.example.todolist.entity.Task
 import com.example.todolist.ui.view_models.TaskViewModel
@@ -66,6 +67,12 @@ class TaskDetailsActivity : AppCompatActivity() {
             val updatedTask = task?.copy(isCompleted = true)
             if (updatedTask != null) {
                 taskViewModel.updateTask(updatedTask)
+
+                val intent = Intent(TaskCompletionReceiver.ACTION_TASK_COMPLETED).apply {
+                    putExtra("task_title", task.title)
+                }
+                sendBroadcast(intent)
+
                 Toast.makeText(this, "Task completed!", Toast.LENGTH_SHORT).show()
             }
         }

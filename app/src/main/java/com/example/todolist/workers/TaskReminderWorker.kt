@@ -36,7 +36,7 @@ class TaskReminderWorker(
     }
 
     override fun doWork(): Result {
-        Log.i(TAG, "Worker started execution") // Changed to Log.i for higher visibility
+        Log.i(TAG, "Worker started execution")
 
         createNotificationChannel()
 

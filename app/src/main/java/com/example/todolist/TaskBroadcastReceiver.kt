@@ -9,7 +9,6 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.example.todolist.entity.Task
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -19,6 +18,7 @@ class TaskBroadcastReceiver : BroadcastReceiver() {
     companion object {
         private const val GROUP_KEY = "com.todolist.TASK_NOTIFICATIONS"
         private const val SUMMARY_ID = 0
+        private const val TAG = "TaskBroadcastReceiver"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -38,9 +38,9 @@ class TaskBroadcastReceiver : BroadcastReceiver() {
             // Update task in database
             CoroutineScope(Dispatchers.IO).launch {
                 val app = context.applicationContext as TodoListApplication
-                val task: Task = app.database.taskDao().getTaskById(taskId).first()
-                app.database.taskDao().updateTask(task.copy(isCompleted = true))
-
+                app.database.taskDao().getTaskById(taskId).first().let { task ->
+                    app.database.taskDao().updateTask(task.copy(isCompleted = true))
+                }
                 // Check if there are any remaining notifications
                 checkAndUpdateSummary(context, app)
             }
@@ -48,8 +48,8 @@ class TaskBroadcastReceiver : BroadcastReceiver() {
     }
 
     private fun handleNotificationDismissed(context: Context, intent: Intent) {
-        val taskId = intent.getLongExtra("TASK_ID", -1L)
-        if (taskId != -1L) {
+        val taskId = intent.getIntExtra("TASK_ID", -1)
+        if (taskId != -1) {
             CoroutineScope(Dispatchers.IO).launch {
                 val app = context.applicationContext as TodoListApplication
                 // Check if there are any remaining notifications
@@ -61,11 +61,11 @@ class TaskBroadcastReceiver : BroadcastReceiver() {
     private suspend fun checkAndUpdateSummary(context: Context, app: TodoListApplication) {
 
         if (ContextCompat.checkSelfPermission(
-                app.applicationContext,
+                app,
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.i("TaskBroadcastReceiver", "Notification permission not granted")
+            Log.i(TAG, "Notification permission not granted")
             return
         }
 
