@@ -57,7 +57,7 @@
 
         <!-- Task completion receiver -->
         <receiver android:name=".TaskCompletionReceiver"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.example.todolist.TASK_COMPLETED" />
             </intent-filter>
