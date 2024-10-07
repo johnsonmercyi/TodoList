@@ -1,6 +1,8 @@
 package com.example.todolist.ui
 
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -8,6 +10,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -31,6 +34,11 @@ class TaskDetailsActivity : AppCompatActivity() {
     private lateinit var deadlineView: TextView
     private lateinit var shareButton: ImageButton
 
+    companion object {
+        private const val TAG = "TaskDetailsActivity"
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -68,7 +76,20 @@ class TaskDetailsActivity : AppCompatActivity() {
             if (updatedTask != null) {
                 taskViewModel.updateTask(updatedTask)
 
+                // Dynamically register the TaskCompletionReceiver
+                val receiver = TaskCompletionReceiver()
+                val intentFilter = IntentFilter(TaskCompletionReceiver.ACTION_TASK_COMPLETED)
+
+                // Register receiver conditionally based on Android version
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    registerReceiver(receiver, intentFilter, RECEIVER_NOT_EXPORTED)
+                } else {
+                    registerReceiver(receiver, intentFilter)
+                }
+
+
                 val intent = Intent(TaskCompletionReceiver.ACTION_TASK_COMPLETED).apply {
+                    Log.i(TAG, "Sending complete task notification...")
                     putExtra("task_title", task.title)
                 }
                 sendBroadcast(intent)

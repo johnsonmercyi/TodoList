@@ -18,15 +18,18 @@ class TaskCompletionReceiver : BroadcastReceiver() {
         const val ACTION_TASK_COMPLETED = "com.example.todolist.TASK_COMPLETED"
         private const val CHANNEL_ID = "task_completion_notifications"
         private const val CHANNEL_NAME = "Task Completion Notifications"
+        private const val TAG = "TaskCompletionReceiver"
     }
 
     override fun onReceive(context: Context, intent: Intent) {
+        Log.i(TAG, "Request to notify received!")
         val app = context.applicationContext as TodoListApplication
         createNotificationChannel(context)
 
         if (intent.action == ACTION_TASK_COMPLETED) {
             val taskTitle = intent.getStringExtra("task_title") ?: "Task"
             showNotification(context, taskTitle, app)
+            Log.i(TAG, "Notification task completed!")
         }
     }
 
@@ -55,7 +58,7 @@ class TaskCompletionReceiver : BroadcastReceiver() {
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.i("TaskBroadcastReceiver", "Notification permission not granted")
+            Log.i("TaskCompletionReceiver", "Notification permission not granted")
             return
         }
 
@@ -69,5 +72,6 @@ class TaskCompletionReceiver : BroadcastReceiver() {
 
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(System.currentTimeMillis().toInt(), notification)
+        Log.i(TAG, "Notification sent!")
     }
 }
