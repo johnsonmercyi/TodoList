@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.AddTaskActivity"
     android:background="@color/background_color"
-    android:fitsSystemWindows="true"
-    android:paddingHorizontal="15dp">
+    android:paddingHorizontal="30dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

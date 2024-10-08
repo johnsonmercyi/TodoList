@@ -18,6 +18,8 @@
 
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
+        <item name="windowActionBar">false</item>
     </style>
 
     <style name="Theme.TodoList" parent="Base.Theme.TodoList">

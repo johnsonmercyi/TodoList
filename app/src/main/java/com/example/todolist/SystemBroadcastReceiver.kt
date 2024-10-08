@@ -3,6 +3,7 @@ package com.example.todolist
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -78,14 +79,28 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
             return
         }
 
+        // Create an intent that will open the MainActivity (or any other activity)
+        val intent = Intent(context, MainActivity::class.java) // Replace with the activity you want to open
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+        // Create a pending intent that wraps the above intent
+        val pendingIntent = PendingIntent.getActivity(
+            context,
+            0,  // Request code
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_icon_primary)
             .setContentTitle(title)
             .setContentText(content)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setAutoCancel(true)
+            .setAutoCancel(true)  // Automatically remove the notification when tapped
+            .setContentIntent(pendingIntent)  // Make the notification clickable
             .build()
 
+        // Display the notification
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(System.currentTimeMillis().toInt(), notification)
     }

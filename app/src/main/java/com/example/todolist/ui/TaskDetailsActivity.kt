@@ -76,21 +76,10 @@ class TaskDetailsActivity : AppCompatActivity() {
             if (updatedTask != null) {
                 taskViewModel.updateTask(updatedTask)
 
-                // Dynamically register the TaskCompletionReceiver
-//                val receiver = TaskCompletionReceiver()
-//                val intentFilter = IntentFilter(TaskCompletionReceiver.ACTION_TASK_COMPLETED)
-//
-////              Register receiver conditionally based on Android version
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//                    registerReceiver(receiver, intentFilter, RECEIVER_NOT_EXPORTED)
-//                } else {
-//                    registerReceiver(receiver, intentFilter)
-//                }
-
-
                 val intent = Intent(TaskCompletionReceiver.ACTION_TASK_COMPLETED).apply {
                     Log.i(TAG, "Sending complete task notification...")
                     putExtra("task_title", task.title)
+                    putExtra("task_id", task.id)
                 }
                 intent.setPackage(packageName)
                 sendBroadcast(intent)

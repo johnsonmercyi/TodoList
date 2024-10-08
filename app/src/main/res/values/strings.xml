@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">TodoList</string>
     <string name="add_new_task_desc">Add new task</string>
+    <string name="view_quote_desc">Quote of the day</string>
     <string name="delete_task_desc">Delete Task</string>
     <string name="task_details_task_title">Task</string>
     <string name="task_details_description_header">Description</string>

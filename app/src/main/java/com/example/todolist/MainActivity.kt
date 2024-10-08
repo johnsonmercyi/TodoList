@@ -3,6 +3,7 @@ package com.example.todolist
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +22,7 @@ import androidx.work.*
 import com.example.todolist.entity.Task
 import com.example.todolist.ui.AddTaskActivity
 import com.example.todolist.ui.TaskDetailsActivity
+import com.example.todolist.ui.TaskDetailsActivity.Companion
 import com.example.todolist.ui.adapter.TaskAdapter
 import com.example.todolist.ui.view_models.TaskViewModel
 import com.example.todolist.ui.view_models.TaskViewModelFactory
@@ -31,10 +33,6 @@ import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var taskAdapter: TaskAdapter
-    private var tasks = mutableListOf<Task>()
-    private lateinit var fab: FloatingActionButton
-    private val REQUEST_ADD_TASK = 1
-    private var previousTaskCount = 0
 
     companion object {
         private const val REQUEST_CODE_POST_NOTIFICATIONS = 1001
@@ -79,6 +77,16 @@ class MainActivity : AppCompatActivity() {
             onTaskChecked = { updatedTask, _ ->
                 taskViewModel.updateTask(updatedTask)
                 if (updatedTask.isCompleted) {
+
+                    // Send broadcast to TaskCompletionReceiver to show notification
+                    val intent = Intent(TaskCompletionReceiver.ACTION_TASK_COMPLETED).apply {
+                        Log.i(TAG, "Sending complete task notification...")
+                        putExtra("task_title", updatedTask.title)
+                        putExtra("task_id", updatedTask.id)
+                    }
+                    intent.setPackage(packageName)
+                    sendBroadcast(intent)
+
                     Toast.makeText(this, "Task completed!", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Task completion cancelled!", Toast.LENGTH_SHORT).show()
@@ -96,8 +104,8 @@ class MainActivity : AppCompatActivity() {
             taskAdapter.updateTasks(tasks)
         }
 
+        // Set up FAB to open AddTaskActivity
         findViewById<FloatingActionButton>(R.id.addTaskFab).setOnClickListener {
-            // Handle FAB click here
             val intent = addTaskLauncher.launch(Intent(this, AddTaskActivity::class.java))
             // startActivity(intent)
         }
