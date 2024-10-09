@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="background_color">#1E2131</color>
-    <color name="primary_color">#D03587</color>
-    <color name="card_color">#262840</color>
-    <color name="border_color">#373C5B</color>
-    <color name="accent_color">#FFB3D9</color>
-    <color name="gray_color">#9D9D9D</color>
-    <color name="canceled_card_background">#454860</color>
-    <color name="canceled_checkbox_button">#5C5F7A</color>
-    <color name="canceled_title_text">#737694</color>
+    <color name="black">#FF000000</color> <!-- Remains the same -->
+    <color name="white">#FFFFFFFF</color> <!-- Remains the same -->
+    <color name="text_color">#1E2131</color> <!-- Remains the same -->
+    <color name="background_color">#F5F5F5</color> <!-- Light gray for background -->
+    <color name="primary_color">#D03587</color> <!-- Remains the same -->
+    <color name="drawable_bg_color">#1E2131</color>
+    <color name="ui_bg_color">#1E2131</color>
+    <color name="fab_bg_color">#1E2131</color>
+    <color name="fab_icon_color">#F5F5F5</color>
+    <color name="tint_color">#F5F5F5</color>
+    <color name="icon_color">#F5F5F5</color> <!-- Remains the same -->
+    <color name="card_color">#FFFFFF</color> <!-- White for card background -->
+    <color name="border_color">#D1D1D1</color> <!-- Light gray for borders -->
+    <color name="accent_color">#FFB3D9</color> <!-- Remains the same -->
+    <color name="gray_color">#7D7D7D</color> <!-- Lighter gray -->
+    <color name="canceled_card_background">#E3E3E3</color> <!-- Light gray for canceled card -->
+    <color name="canceled_checkbox_button">#B0B3C1</color> <!-- Lighter shade for checkbox button -->
+    <color name="canceled_title_text">#4E4E4E</color> <!-- Dark gray for title text -->
 </resources>

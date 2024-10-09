@@ -12,9 +12,9 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="70dp"
+        android:paddingTop="20dp"
         android:background="@android:color/transparent"
-        app:titleTextColor="@color/white"
         app:titleTextAppearance="@style/TextAppearance.App.ActionBar.Title"
         android:layout_marginBottom="20dp"
         android:theme="@style/ThemeOverlay.App.ActionBar"
@@ -28,8 +28,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingTop="15dp"
+        android:paddingTop="10dp"
         android:paddingBottom="80dp"
+        android:layout_marginTop="10dp"
         android:paddingHorizontal="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/fab_bg_color"
         android:clickable="true"
         android:contentDescription="@string/add_new_task_desc"
         android:focusable="true"
@@ -54,14 +55,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.976"
         app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@color/primary_color" />
+        app:tint="@color/fab_icon_color" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/quoteFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/fab_bg_color"
         android:clickable="true"
         android:contentDescription="@string/view_quote_desc"
         android:focusable="true"
@@ -73,6 +74,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.999"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@color/primary_color" />
+        app:srcCompat="@drawable/ic_quote_primary"
+        app:tint="@color/fab_icon_color" />
 </androidx.constraintlayout.widget.ConstraintLayout>

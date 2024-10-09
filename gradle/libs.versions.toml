@@ -20,6 +20,7 @@ constraintlayout = "2.1.4"
 materialdatetimepicker = "4.2.0"
 materialVersion = "1.9.0"
 recyclerview = "1.3.2"
+retrofit = "2.9.0"
 roomRuntime = "2.6.1"
 workRuntimeKtx = "2.9.1"
 
@@ -33,6 +34,7 @@ androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRunt
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 cardview-v7 = { module = "com.android.support:cardview-v7", version.ref = "cardviewV7" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -47,6 +49,7 @@ material-v1100 = { module = "com.google.android.material:material", version.ref 
 material-v160 = { module = "com.google.android.material:material", version.ref = "googleMaterialVersion" }
 material-v190 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 materialdatetimepicker = { module = "com.wdullaer:materialdatetimepicker", version.ref = "materialdatetimepicker" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

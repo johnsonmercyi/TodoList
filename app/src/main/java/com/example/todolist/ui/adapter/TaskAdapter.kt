@@ -97,7 +97,7 @@ class TaskAdapter(
                 deleteButton.imageTintList = ContextCompat.getColorStateList(context, R.color.accent_color)
             } else {
                 itemView.setBackgroundResource(R.drawable.ui_radius_task_card)
-                taskTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
+                taskTitle.setTextColor(ContextCompat.getColor(context, R.color.text_color))
                 taskTitle.paintFlags = taskTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                 taskCheckbox.buttonTintList = ContextCompat.getColorStateList(context, R.color.primary_color)
                 deleteButton.imageTintList = ContextCompat.getColorStateList(context, R.color.primary_color)

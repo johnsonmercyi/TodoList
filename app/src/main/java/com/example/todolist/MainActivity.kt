@@ -3,7 +3,6 @@ package com.example.todolist
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -19,10 +18,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.work.*
-import com.example.todolist.entity.Task
 import com.example.todolist.ui.AddTaskActivity
+import com.example.todolist.ui.QuoteActivity
 import com.example.todolist.ui.TaskDetailsActivity
-import com.example.todolist.ui.TaskDetailsActivity.Companion
 import com.example.todolist.ui.adapter.TaskAdapter
 import com.example.todolist.ui.view_models.TaskViewModel
 import com.example.todolist.ui.view_models.TaskViewModelFactory
@@ -108,6 +106,11 @@ class MainActivity : AppCompatActivity() {
         findViewById<FloatingActionButton>(R.id.addTaskFab).setOnClickListener {
             val intent = addTaskLauncher.launch(Intent(this, AddTaskActivity::class.java))
             // startActivity(intent)
+        }
+
+        findViewById<FloatingActionButton>(R.id.quoteFab).setOnClickListener {
+            val intent = Intent(this, QuoteActivity::class.java)
+            startActivity(intent)
         }
 
     }
