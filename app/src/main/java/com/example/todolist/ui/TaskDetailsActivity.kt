@@ -1,7 +1,6 @@
 package com.example.todolist.ui
 
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -69,6 +68,7 @@ class TaskDetailsActivity : AppCompatActivity() {
 
         val id = intent.getIntExtra("task_id", -1)
 
+        // Handles completed button click
         completedButton.setOnClickListener {
             // Handle click event for completedButton
             val task = taskViewModel.allTasks.value?.find { it.id == id }
@@ -88,6 +88,7 @@ class TaskDetailsActivity : AppCompatActivity() {
             }
         }
 
+        // Handles edit button click and opens EditTaskActivity
         editButton.setOnClickListener {
             // Handle click event for editButton
             val intent = Intent(this, EditTaskActivity::class.java)
@@ -150,7 +151,8 @@ class TaskDetailsActivity : AppCompatActivity() {
                     descriptionView.text = task.description
 
                     val inputFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-                    val outputFormat = SimpleDateFormat("EEE, d'th' MMM yyyy 'at' hh:mm a", Locale.getDefault())
+                    val outputFormat =
+                        SimpleDateFormat("EEE, d'th' MMM yyyy 'at' hh:mm a", Locale.getDefault())
                     val date = inputFormat.parse(task.deadline)
                     val outputDate = date?.let { outputFormat.format(it) }
 
@@ -171,14 +173,18 @@ class TaskDetailsActivity : AppCompatActivity() {
             }
 
 
-
         }
     }
 
+    // Helper function to share a task
+    // Within which we demonstrated implicit intent
     private fun shareTask(task: Task) {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, "Hey! I'm excited to share my task with you!${System.lineSeparator()}Check it out: Title: ${task.title}${System.lineSeparator()}Note: ${task.description}")
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Hey! I'm excited to share my task with you!${System.lineSeparator()}Check it out: Title: ${task.title}${System.lineSeparator()}Note: ${task.description}"
+            )
             type = "text/html"
         }
 
@@ -222,6 +228,7 @@ class TaskDetailsActivity : AppCompatActivity() {
                 finish() // Handle back button press
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

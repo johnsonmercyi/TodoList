@@ -4,13 +4,13 @@ import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.util.TimeUtils
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
@@ -36,6 +36,8 @@ import com.wdullaer.materialdatetimepicker.time.Timepoint
 import java.util.Timer
 
 class AddTaskActivity : AppCompatActivity() {
+
+    // Fields declaration
     private lateinit var titleText: EditText
     private lateinit var descriptionText: EditText
     private lateinit var deadlineText: EditText
@@ -44,6 +46,7 @@ class AddTaskActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var sharedPreferencesEditor: SharedPreferences.Editor
 
+    // Initialize constants
     companion object {
         private const val PREF_TEMP_TASK_DATA = "todo_pref"
         private const val TAG = "AddTaskActivity"
@@ -65,13 +68,8 @@ class AddTaskActivity : AppCompatActivity() {
         supportActionBar?.title = "Add Task"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Initialize fields
         initComponents()
-
-        val taskViewModel: TaskViewModel by viewModels {
-            TaskViewModelFactory((application as TodoListApplication))
-        }
-
-
     }
 
     override fun onStart() {
@@ -109,10 +107,10 @@ class AddTaskActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        Log.i("MY_TAG: ", "AddTaskActivity: onStop")
+        Log.i("ON_STOP: ", "AddTaskActivity: onStop")
         if (isFinishing) {
-            // Clear only specific temporary data when actually finishing the activity
-            clearTemporaryData()
+            Log.i("ON_STOP: ", "Is finishing...")
+            clearTemporaryData() // Clear temporary data when the activity is finished
         }
     }
 
@@ -217,7 +215,8 @@ class AddTaskActivity : AppCompatActivity() {
         datePicker.vibrate(true)
 
 
-
+        // Set click listener for the deadline button
+        // This launches the date picker dialog
         deadlineBtn.setOnClickListener {
             datePicker.show(supportFragmentManager, "dateTimePicker")
         }

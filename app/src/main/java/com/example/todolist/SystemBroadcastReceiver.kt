@@ -80,7 +80,7 @@ class SystemBroadcastReceiver : BroadcastReceiver() {
         }
 
         // Create an intent that will open the MainActivity (or any other activity)
-        val intent = Intent(context, MainActivity::class.java) // Replace with the activity you want to open
+        val intent = Intent(context, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
 
         // Create a pending intent that wraps the above intent

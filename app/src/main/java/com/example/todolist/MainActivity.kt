@@ -1,14 +1,12 @@
 package com.example.todolist
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -32,18 +30,10 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity() {
     private lateinit var taskAdapter: TaskAdapter
 
+    //
     companion object {
         private const val REQUEST_CODE_POST_NOTIFICATIONS = 1001
         private const val TAG = "MainActivity"
-    }
-
-    private val addTaskLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // Task added successfully, update UI
-            Toast.makeText(this, "Task added successfully", Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,10 +63,14 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.recyclerView)
         taskAdapter = TaskAdapter(
             onTaskChecked = { updatedTask, _ ->
+                // Update the task in the database
                 taskViewModel.updateTask(updatedTask)
+
+                // Check if the task is marked as completed
                 if (updatedTask.isCompleted) {
 
                     // Send broadcast to TaskCompletionReceiver to show notification
+                    // Implicit Intent usage demonstrated
                     val intent = Intent(TaskCompletionReceiver.ACTION_TASK_COMPLETED).apply {
                         Log.i(TAG, "Sending complete task notification...")
                         putExtra("task_title", updatedTask.title)
@@ -89,7 +83,8 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "Task completion cancelled!", Toast.LENGTH_SHORT).show()
                 }
-            }, onTaskDeleted = { task, _ ->
+            },
+            onTaskDeleted = { task, _ ->
                 taskViewModel.deleteTask(task)
                 Toast.makeText(this, "Task deleted!", Toast.LENGTH_SHORT).show()
             }, context = this
@@ -102,37 +97,47 @@ class MainActivity : AppCompatActivity() {
             taskAdapter.updateTasks(tasks)
         }
 
-        // Set up FAB to open AddTaskActivity
+        // Handles floating action button click and opens AddTaskActivity
         findViewById<FloatingActionButton>(R.id.addTaskFab).setOnClickListener {
-            val intent = addTaskLauncher.launch(Intent(this, AddTaskActivity::class.java))
-            // startActivity(intent)
+            // Explicit Intent usage demonstrated
+            val intent = Intent(this, AddTaskActivity::class.java)
+             startActivity(intent)
         }
 
+        // Handles floating action button click and opens QuoteActivity
         findViewById<FloatingActionButton>(R.id.quoteFab).setOnClickListener {
+            // Explicit Intent usage demonstrated
             val intent = Intent(this, QuoteActivity::class.java)
             startActivity(intent)
         }
 
     }
 
+    // Request notification permission
     private fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+            // If permission was not granted, request it.
             if (ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
                 Log.d(TAG, "Requesting POST_NOTIFICATIONS permission")
+
+                // Request permission for notification
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                     REQUEST_CODE_POST_NOTIFICATIONS
                 )
             } else {
+                // Permission was granted, schedule worker
                 Log.d(TAG, "POST_NOTIFICATIONS permission already granted")
                 scheduleTaskReminderWorker()
             }
         } else {
+            // For devices running lower than Tiramisu, schedule worker directly
             Log.d(TAG, "Running on pre-Tiramisu device, scheduling worker directly")
             scheduleTaskReminderWorker()
         }
@@ -155,14 +160,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Schedule TaskReminderWorker Service to run periodically
     private fun scheduleTaskReminderWorker() {
         val workRequest = PeriodicWorkRequestBuilder<TaskReminderWorker>(
-            15, TimeUnit.MINUTES,  // Minimum interval allowed
+            12, TimeUnit.HOURS,  // Minimum interval allowed
             5, TimeUnit.MINUTES    // Flex interval
         ).setInitialDelay(1, TimeUnit.MINUTES)  // Initial delay
             .build()
 
         Log.d(TAG, "Scheduling TaskReminderWorker")
+
+        // Enqueue the work request
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "TaskReminderWorker",
             ExistingPeriodicWorkPolicy.UPDATE,
@@ -171,9 +179,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleNotificationClick(intent: Intent?) {
+        // Handle notification click
         intent?.getIntExtra("TASK_ID", -1)?.let { taskId ->
             if (taskId != -1) {
                 // Navigate to task detail screen
+                // And also demonstrates explicit intent usage
                 val detailsIntent = Intent(this, TaskDetailsActivity::class.java).apply {
                     putExtra("task_id", taskId)
                 }

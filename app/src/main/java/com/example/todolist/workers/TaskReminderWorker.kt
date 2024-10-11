@@ -26,6 +26,8 @@ class TaskReminderWorker(
     appContext: Context,
     workerParams: WorkerParameters
 ) : Worker(appContext, workerParams) {
+
+    // Initialize constants
     companion object {
         private const val TAG = "TaskReminderWorker"
         private const val CHANNEL_ID = "task_reminder_channel"

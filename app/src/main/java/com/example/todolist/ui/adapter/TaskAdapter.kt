@@ -73,7 +73,9 @@ class TaskAdapter(
                 }
             }
 
+            // Handle item click
             itemView.setOnClickListener {
+                // Demonstrates explicit intent usage
                 val intent = Intent(context, TaskDetailsActivity::class.java).apply {
                     putExtra("task_id", task.id)
                     putExtra("task_title", task.title)
